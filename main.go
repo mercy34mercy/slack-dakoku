@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 )
 
@@ -10,7 +11,17 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Request URL:", r.URL.Path)
 	fmt.Println("Request Method:", r.Method)
 	fmt.Println("Request Header:", r.Header)
-	fmt.Println("Request Body:", r.Body)
+
+	// リクエストボディを読み込む
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "Failed to read request body", http.StatusInternalServerError)
+		return
+	}
+
+	// リクエストボディの中身を表示
+	fmt.Println("Request Body:", string(body))
+
 	w.Write([]byte("Hello, World!"))
 }
 
