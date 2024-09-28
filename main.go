@@ -6,6 +6,11 @@ import (
 )
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
+	// リクエストの中身を表示
+	fmt.Println("Request URL:", r.URL.Path)
+	fmt.Println("Request Method:", r.Method)
+	fmt.Println("Request Header:", r.Header)
+	fmt.Println("Request Body:", r.Body)
 	w.Write([]byte("Hello, World!"))
 }
 
